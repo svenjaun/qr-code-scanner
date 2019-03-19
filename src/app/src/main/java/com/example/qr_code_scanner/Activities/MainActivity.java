@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.qr_code_scanner.Fragments.EditFragment;
 import com.example.qr_code_scanner.R;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -28,9 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     Button btnAction;
-    String intentData = "";
-    boolean isEmail = false;
-
+    EditFragment editFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,35 +109,12 @@ public class MainActivity extends AppCompatActivity {
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
-
-
-                    txtBarcodeValue.post(new Runnable() {
-
-                        @Override
-                        public void run() {
-
-                            if (barcodes.valueAt(0).email != null) {
-                                txtBarcodeValue.removeCallbacks(null);
-                                intentData = barcodes.valueAt(0).email.address;
-                                txtBarcodeValue.setText(intentData);
-                                isEmail = true;
-                               // btnAction.setText("ADD CONTENT TO THE MAIL");
-                            } else {
-                                isEmail = false;
-                                /*btnAction.setText("LAUNCH URL");*/
-                                intentData = barcodes.valueAt(0).displayValue;
-                                txtBarcodeValue.setText(intentData);
-
-                            }
-
-                        }
-                    });
-
+                    editFragment = new EditFragment(barcodes.valueAt(0).displayValue);
+                    getSupportFragmentManager().beginTransaction()/*.setCustomAnimations(R.anim.fade_in,R.anim.fade_out)*/.replace(R.id.fragmentHolder, editFragment).commit();
                 }
             }
         });
     }
-
 
     @Override
     protected void onPause() {
