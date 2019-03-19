@@ -3,10 +3,14 @@ package com.example.qr_code_scanner.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.qr_code_scanner.R;
 
@@ -20,6 +24,9 @@ import com.example.qr_code_scanner.R;
  * create an instance of this fragment.
  */
 public class EditFragment extends Fragment {
+
+    String value;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -107,4 +114,18 @@ public class EditFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    void fillContent(ViewGroup parent){
+        LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.fragment_edit,parent,false);
+        ViewHolder holder = new ViewHolder();
+        holder.dateScanned =  view.findViewById(R.id.edit_fragment_date);
+    }
 }
+
+class ViewHolder{
+    TextView dateScanned;
+    TextView codeValue;
+    EditText Name;
+}
+
