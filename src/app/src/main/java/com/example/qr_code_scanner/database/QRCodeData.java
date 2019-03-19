@@ -45,25 +45,7 @@ public class QRCodeData {
 	}
 
 	@Nullable
-	public QRCodeModel getCertificate(long id) {
-		QRCodeModel result = null;
-		try {
-			Cursor cursor = getDb().query(tableName, columns,
-					QRCodeDatabaseHelper.COL_ID + " = " + id,
-					null, null, null, null, null);
-			cursor.moveToFirst();
-			if (cursor.getCount() > 0) {
-				result = cursorToCertificate(cursor);
-			}
-			cursor.close();
-		} catch (SQLException e) {
-			System.out.println("Database error while querying for certificate with id " + id + ": " + e);
-		}
-		return result;
-	}
-
-	@Nullable
-	public QRCodeModel getQRCode(@NonNull String qrcodeId) {
+	public QRCodeModel getQRCode(@NonNull int qrcodeId) {
 		QRCodeModel result = null;
 		try {
 			Cursor cursor = getDb().query(tableName, columns,
@@ -71,7 +53,7 @@ public class QRCodeData {
 							" = " + qrcodeId, null, null, null, null, null);
 			cursor.moveToFirst();
 			if (cursor.getCount() > 0) {
-				result = cursorToCertificate(cursor);
+				result = cursorToQRCode(cursor);
 			}
 			cursor.close();
 		} catch (SQLException e) {
@@ -87,7 +69,7 @@ public class QRCodeData {
 			Cursor cursor = getDb().query(tableName, columns, null, null, null, null, null);
 			cursor.moveToFirst();
 			while (!cursor.isAfterLast()) {
-				result.add(cursorToCertificate(cursor));
+				result.add(cursorToQRCode(cursor));
 				cursor.moveToNext();
 			}
 			cursor.close();
@@ -97,7 +79,7 @@ public class QRCodeData {
 		return result;
 	}
 
-	private QRCodeModel cursorToCertificate(@NonNull Cursor cursor) {
+	private QRCodeModel cursorToQRCode(@NonNull Cursor cursor) {
 		return new QRCodeModel(
 				cursor.getInt(cursor.getColumnIndex(QRCodeDatabaseHelper.COL_ID)),
 				cursor.getString(cursor.getColumnIndex(
@@ -108,10 +90,10 @@ public class QRCodeData {
 						QRCodeDatabaseHelper.COL_DATE)));
 	}
 
-	public boolean removeQRCode(long id) {
+	public boolean removeQRCode(int id) {
 		boolean success = false;
 		try {
-			QRCodeModel certificate = getCertificate(id);
+			QRCodeModel certificate = getQRCode(id);
 			if (certificate == null) {
 				return false;
 			}
@@ -121,5 +103,23 @@ public class QRCodeData {
 			System.out.println("Database error while deleting certificate with id '" + id + "': " + e);
 		}
 		return success;
+	}
+
+	public int getLatestID() {
+		int id;
+		try {
+			Cursor cursor = getDb().query(tableName, columns, null, null, null, null, null, null);
+			cursor.moveToLast();
+			if (cursor.getCount() > 0) {
+				return 1;
+			}
+			id = cursorToQRCode(cursor).getID() + 1;
+			cursor.close();
+			return id;
+		} catch (SQLException e) {
+			System.out.println(	"Database error while get id or no entry in db: " + e);
+			id = 0;
+		}
+		return id;
 	}
 }

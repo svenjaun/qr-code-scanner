@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.qr_code_scanner.R;
+import com.example.qr_code_scanner.database.QRCodeData;
+import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
+
+import java.util.Date;
 
 
 /**
@@ -106,5 +110,10 @@ public class EditFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void createQRCode(String name, String value) {
+        QRCodeData qrcodeData = new QRCodeData(getContext());
+        qrcodeData.createQRCode(new QRCodeModel(qrcodeData.getLatestID(), name, value, new Date().getTime()));
     }
 }
