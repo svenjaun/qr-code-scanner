@@ -1,7 +1,9 @@
-package com.example.qr_code_scanner;
+package com.example.qr_code_scanner.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.qr_code_scanner.R;
 
 public class HistoryActivity extends AppCompatActivity {
 
