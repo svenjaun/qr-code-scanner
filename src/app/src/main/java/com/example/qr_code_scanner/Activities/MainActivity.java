@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
                     editFragment = new EditFragment(barcodes.valueAt(0).displayValue);
-                    getSupportFragmentManager().beginTransaction()/*.setCustomAnimations(R.anim.fade_in,R.anim.fade_out)*/.replace(R.id.fragmentHolder, editFragment).commit();
+                    getSupportFragmentManager().beginTransaction()/*.setCustomAnimations(R.anim.fade_in,R.anim.fade_out)*/.replace(R.id.fragment_holder, editFragment).commit();
                 }
             }
         });
