@@ -1,23 +1,28 @@
 package com.example.qr_code_scanner.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
 
+import com.example.qr_code_scanner.QrCodeListAdapter;
 import com.example.qr_code_scanner.R;
 import com.example.qr_code_scanner.database.QRCodeData;
 import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
 
+import java.util.ArrayList;
 import java.util.Date;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
 
 
 /**
@@ -29,8 +34,9 @@ import java.util.Date;
 public class EditFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    @Nullable private QrCodeListAdapter listAdapter;
+    @BindView(R.id.list_fragment_recycler_view) RecyclerView recyclerView;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -47,18 +53,19 @@ public class EditFragment extends Fragment {
         this.value = value;
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_edit, container, false);
     }
 
@@ -79,6 +86,11 @@ public class EditFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+    public void onCreateViewHook(@NonNull FragmentActivity activity,
+                                 @NonNull Context context, @NonNull View v,
+                                 @Nullable Bundle savedInstanceState) {
+        setListAdapter(activity, v);
+    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -95,22 +107,22 @@ public class EditFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    void fillContent(ViewGroup parent){
-        LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.fragment_edit,parent,false);
-        ViewHolder holder = new ViewHolder();
-        holder.dateScanned =  view.findViewById(R.id.edit_fragment_date);
+    @NonNull
+    private ArrayList<QRCodeModel> getQrCodes(@NonNull Context context) {
+        QRCodeData certificateData = new QRCodeData(context);
+        return certificateData.getAllQRCodes();
     }
 
     private void createQRCode(String name) {
         QRCodeData qrcodeData = new QRCodeData(getContext());
         qrcodeData.createQRCode(new QRCodeModel(qrcodeData.getLatestID(), name, value, new Date().getTime()));
     }
-}
 
-class ViewHolder{
-    TextView dateScanned;
-    TextView codeValue;
-    EditText Name;
+    private void setListAdapter(@NonNull FragmentActivity activity, @NonNull View view) {
+        listAdapter = new QrCodeListAdapter(activity, getQrCodes(activity));
+        listAdapter.registerAdapterDataObserver(
+                new ListDataObserver(view, listAdapter));
+        recyclerView.setAdapter(listAdapter);
+    }
 }
 
