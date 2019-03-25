@@ -33,20 +33,20 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
     public ViewHolder(@NonNull Context context, @NonNull View view) {
         super(view);
-        scanner = scanner.findViewById(R.id.qr_code_surfaceView);
-        qrCodeTextview = qrCodeTextview.findViewById(R.id.qr_code_no_code_text);
-        floatingActionButton = floatingActionButton.findViewById(R.id.qr_code_fab);
-        listElementQrCode = listElementQrCode.findViewById(R.id.list_element_qr_code);
-        listElementNameTextView = listElementNameTextView.findViewById(R.id.list_element_qr_code_name);
-        listEllementDateTextView = listEllementDateTextView.findViewById(R.id.list_element_qr_code_date);
-        detailQrCode = detailQrCode.findViewById(R.id.detail_fragment_qr_code);
-        detailCodeName = detailCodeName.findViewById(R.id.detail_fragment_code_name);
-        detailDate = detailDate.findViewById(R.id.detail_fragment_date);
-        detailCodeContent = detailCodeContent.findViewById(R.id.detail_fragment_code_content);
-        editCodeName = editCodeName.findViewById(R.id.edit_fragment_code_name);
-        editDate = editDate.findViewById(R.id.edit_fragment_date);
-        editCodeContent = editCodeContent.findViewById(R.id.edit_fragment_code_content);
-        listFragmentempty = listFragmentempty.findViewById(R.id.list_fragment_empty);
+        scanner = view.findViewById(R.id.qr_code_surfaceView);
+        qrCodeTextview = view.findViewById(R.id.qr_code_no_code_text);
+        floatingActionButton = view.findViewById(R.id.qr_code_fab);
+        listElementQrCode = view.findViewById(R.id.list_element_qr_code);
+        listElementNameTextView = view.findViewById(R.id.list_element_qr_code_name);
+        listEllementDateTextView = view.findViewById(R.id.list_element_qr_code_date);
+        detailQrCode = view.findViewById(R.id.detail_fragment_qr_code);
+        detailCodeName = view.findViewById(R.id.detail_fragment_code_name);
+        detailDate = view.findViewById(R.id.detail_fragment_date);
+        detailCodeContent = view.findViewById(R.id.detail_fragment_code_content);
+        editCodeName = view.findViewById(R.id.edit_fragment_code_name);
+        editDate = view.findViewById(R.id.edit_fragment_date);
+        editCodeContent = view.findViewById(R.id.edit_fragment_code_content);
+        listFragmentempty = view.findViewById(R.id.list_fragment_empty);
 
 
         this.context = context;

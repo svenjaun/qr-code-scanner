@@ -41,7 +41,7 @@
             app:layout_constraintRight_toRightOf="parent"
             android:backgroundTint="@color/colorPrimary"
             app:borderWidth="0dp"
-            />
+            tools:ignore="VectorDrawableCompat" />
 
 
 

@@ -1,7 +1,7 @@
 package com.example.qr_code_scanner.Activities;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
 import com.example.qr_code_scanner.Fragments.ListFragment;
 import com.example.qr_code_scanner.R;
