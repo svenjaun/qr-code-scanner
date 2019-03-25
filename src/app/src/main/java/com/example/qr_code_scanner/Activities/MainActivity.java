@@ -1,14 +1,17 @@
 package com.example.qr_code_scanner.Activities;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.Button;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
-    Button btnAction;
     EditFragment editFragment;
+    FloatingActionButton floatingActionButton;
+    Activity thisActivity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,26 +44,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        txtBarcodeValue = findViewById(R.id.txtBarcodeValue);
-        surfaceView = findViewById(R.id.surfaceView);
-        btnAction = findViewById(R.id.btnAction);
+        txtBarcodeValue = findViewById(R.id.qr_code_no_code_text);
+        surfaceView = findViewById(R.id.qr_code_surfaceView);
+        floatingActionButton = findViewById(R.id.qr_code_fab);
 
         //TODO use for opening link in detail view
+                /*if (intentData.length() > 0) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(intentData)));
+                }*/
 
-        /*
-        btnAction.setOnClickListener(new View.OnClickListener() {
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (intentData.length() > 0) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(intentData)));
-                }
+                Intent intent = new Intent(thisActivity, HistoryActivity.class);
+                startActivity(intent);
             }
-        });*/
+        });
     }
 
     private void initialiseDetectorsAndSources() {
 
-        Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Barcode scanner started",
+                Toast.LENGTH_SHORT).show();
 
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
@@ -74,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 try {
-                    if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(MainActivity.this,
+                            Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                         cameraSource.start(surfaceView.getHolder());
                     } else {
                         ActivityCompat.requestPermissions(MainActivity.this, new
@@ -102,7 +109,9 @@ public class MainActivity extends AppCompatActivity {
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-                Toast.makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        "To prevent memory leaks barcode scanner has been stopped",
+                        Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -110,7 +119,8 @@ public class MainActivity extends AppCompatActivity {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
                     editFragment = new EditFragment(barcodes.valueAt(0).displayValue);
-                    getSupportFragmentManager().beginTransaction()/*.setCustomAnimations(R.anim.fade_in,R.anim.fade_out)*/.replace(R.id.fragmentHolder, editFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(
+                            R.id.fragment_holder, editFragment).commit();
                 }
             }
         });
