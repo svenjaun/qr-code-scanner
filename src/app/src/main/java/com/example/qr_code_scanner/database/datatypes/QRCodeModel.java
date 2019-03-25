@@ -1,5 +1,6 @@
 package com.example.qr_code_scanner.database.datatypes;
-import androidx.annotation.NonNull;
+
+import android.support.annotation.NonNull;
 
 import java.util.Calendar;
 

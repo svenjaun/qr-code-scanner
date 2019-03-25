@@ -3,13 +3,18 @@ package com.example.qr_code_scanner.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.qr_code_scanner.Activities.HistoryActivity;
 import com.example.qr_code_scanner.QrCodeListAdapter;
 import com.example.qr_code_scanner.R;
 import com.example.qr_code_scanner.database.QRCodeData;
@@ -17,12 +22,6 @@ import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
 
 import java.util.ArrayList;
 
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
 
 
 /**
@@ -37,7 +36,7 @@ public class ListFragment extends Fragment {
 	// TODO: Rename parameter arguments, choose names that match
 	@Nullable private QrCodeListAdapter listAdapter;
 
-	@BindView(R.id.list_fragment_recycler_view) RecyclerView recyclerView;
+	RecyclerView recyclerView;
 
 
 	private OnFragmentInteractionListener mListener;
@@ -64,6 +63,8 @@ public class ListFragment extends Fragment {
 	                          @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
+		recyclerView = view.findViewById(R.id.list_fragment_recycler_view);
+
 		onCreateViewHook(requireActivity(),requireContext(),view,savedInstanceState);
 	}
 
@@ -72,13 +73,6 @@ public class ListFragment extends Fragment {
 	                             @Nullable Bundle savedInstanceState) {
 		setLayoutManager(context);
 		setListAdapter(activity, v);
-	}
-
-	// TODO: Rename method, update argument and hook method into UI event
-	public void onButtonPressed(Uri uri) {
-		if (mListener != null) {
-			mListener.onFragmentInteraction(uri);
-		}
 	}
 
 	@Override
@@ -100,27 +94,15 @@ public class ListFragment extends Fragment {
 
 	@NonNull
 	private ArrayList<QRCodeModel> getQrCodes(@NonNull Context context) {
-		QRCodeData qrCodeData = new QRCodeData(context);
-		return qrCodeData.getAllQRCodes();
+		QRCodeData certificateData = new QRCodeData(context);
+		return certificateData.getAllQRCodes();
 	}
 
 	private void setListAdapter(@NonNull FragmentActivity activity, @NonNull View view) {
-		listAdapter = new QrCodeListAdapter(activity, getQrCodes(activity));
-		listAdapter.registerAdapterDataObserver(
-				new ListDataObserver(view, listAdapter));
+		listAdapter = new QrCodeListAdapter(activity, getQrCodes(activity), new HistoryActivity());
+		listAdapter.registerAdapterDataObserver(new ListDataObserver(view, listAdapter));
 		recyclerView.setAdapter(listAdapter);
 	}
-
-	/**
-	 * This interface must be implemented by activities that contain this
-	 * fragment to allow an interaction in this fragment to be communicated
-	 * to the activity and potentially other fragments contained in that
-	 * activity.
-	 * <p>
-	 * See the Android Training lesson <a href=
-	 * "http://developer.android.com/training/basics/fragments/communicating.html"
-	 * >Communicating with Other Fragments</a> for more information.
-	 */
 	public interface OnFragmentInteractionListener {
 		// TODO: Update argument type and name
 		void onFragmentInteraction(Uri uri);
@@ -128,4 +110,3 @@ public class ListFragment extends Fragment {
 
 
 }
-

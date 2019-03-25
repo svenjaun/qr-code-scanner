@@ -5,8 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
 import java.util.ArrayList;
@@ -108,16 +108,16 @@ public class QRCodeData {
 	public int getLatestID() {
 		int id;
 		try {
-			Cursor cursor = getDb().query(tableName, columns, null, null, null, null, null, null);
+			Cursor  cursor = getDb().rawQuery("select * from " + tableName,null);
 			cursor.moveToLast();
-			if (cursor.getCount() > 0) {
+			if (cursor.getCount() <= 0) {
 				return 1;
 			}
+
 			id = cursorToQRCode(cursor).getID() + 1;
 			cursor.close();
-			return id;
-		} catch (SQLException e) {
-			System.out.println(	"Database error while get id or no entry in db: " + e);
+		} catch (Exception e) {
+			System.out.println(	"Database error while get id or no entry in db: ------------------------------------------------------------------------------" + e);
 			id = 0;
 		}
 		return id;

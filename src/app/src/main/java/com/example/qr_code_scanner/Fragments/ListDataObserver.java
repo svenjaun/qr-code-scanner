@@ -1,25 +1,24 @@
 package com.example.qr_code_scanner.Fragments;
 
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.qr_code_scanner.QrCodeListAdapter;
 import com.example.qr_code_scanner.R;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class ListDataObserver extends RecyclerView.AdapterDataObserver {
-    @NonNull private QrCodeListAdapter listAdapter;
+    @NonNull
+    private QrCodeListAdapter listAdapter;
 
-    @BindView(R.id.list_fragment_recycler_view) RecyclerView recyclerView;
-    @BindView(R.id.list_fragment_empty) LinearLayout emptyListView;
+    RecyclerView recyclerView;
+    LinearLayout emptyListView;
 
-    public ListDataObserver(@NonNull View view, @NonNull QrCodeListAdapter listAdapter) {
+    ListDataObserver(@NonNull View view, @NonNull QrCodeListAdapter listAdapter) {
         this.listAdapter = listAdapter;
-
+        recyclerView = view.findViewById(R.id.list_fragment_recycler_view);
+        emptyListView = view.findViewById(R.id.list_fragment_empty);
         init(view);
     }
 
@@ -34,7 +33,6 @@ public class ListDataObserver extends RecyclerView.AdapterDataObserver {
     }
 
     private void init(@NonNull View view) {
-        ButterKnife.bind(this, view);
         toggleEmptyView();
     }
 
