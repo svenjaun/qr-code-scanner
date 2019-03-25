@@ -29,9 +29,6 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 	@BindView(R.id.detail_fragment_code_name) TextView detailCodeName;
 	@BindView(R.id.detail_fragment_date) TextView detailDate;
 	@BindView(R.id.detail_fragment_code_content) TextView detailCodeContent;
-	@BindView(R.id.edit_fragment_code_name) EditText editCodeName;
-	@BindView(R.id.edit_fragment_date) TextView editDate;
-	@BindView(R.id.edit_fragment_code_content) TextView editCodeContent;
 	@BindView(R.id.list_fragment_empty) LinearLayout listFragmentempty;
 
 	public ViewHolder(@NonNull Context context, @NonNull View view) {
@@ -85,15 +82,4 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 		return detailCodeContent;
 	}
 
-	public EditText getEditCodeName() {
-		return editCodeName;
-	}
-
-	public TextView getEditDate() {
-		return editDate;
-	}
-
-	public TextView getEditCodeContent() {
-		return editCodeContent;
-	}
 }

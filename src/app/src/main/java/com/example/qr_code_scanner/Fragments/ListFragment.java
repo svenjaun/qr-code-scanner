@@ -3,7 +3,8 @@ package com.example.qr_code_scanner.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,7 @@ import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
 
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -53,7 +54,7 @@ public class ListFragment extends Fragment {
 
 	@Nullable
 	@Override
-	public View onCreateView(@android.support.annotation.NonNull LayoutInflater inflater,
+	public View onCreateView(@NonNull LayoutInflater inflater,
 	                         @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_list, container, false);
 	}
@@ -99,8 +100,8 @@ public class ListFragment extends Fragment {
 
 	@NonNull
 	private ArrayList<QRCodeModel> getQrCodes(@NonNull Context context) {
-		QRCodeData certificateData = new QRCodeData(context);
-		return certificateData.getAllQRCodes();
+		QRCodeData qrCodeData = new QRCodeData(context);
+		return qrCodeData.getAllQRCodes();
 	}
 
 	private void setListAdapter(@NonNull FragmentActivity activity, @NonNull View view) {
