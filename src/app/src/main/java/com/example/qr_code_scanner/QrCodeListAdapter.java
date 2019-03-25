@@ -1,23 +1,20 @@
 package com.example.qr_code_scanner;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.constraint.Group;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.qr_code_scanner.Activities.HistoryActivity;
 import com.example.qr_code_scanner.Fragments.DetailFragment;
 import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class QrCodeListAdapter extends RecyclerView.Adapter<ViewHolder> {
     @NonNull
@@ -65,8 +62,9 @@ public class QrCodeListAdapter extends RecyclerView.Adapter<ViewHolder> {
         viewHolder.getListElementNameTextView().setText(qrCode.getName());
         Calendar cal = qrCode.getDate();
         cal.add(Calendar.DATE, 1);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-        viewHolder.getListEllementDateTextView().setText(cal.getTime().toString());
+        SimpleDateFormat format = new SimpleDateFormat("EEEE dd.MMMM yyyy", Locale.GERMAN);
+
+        viewHolder.getListEllementDateTextView().setText(format.format(cal.getTime()));
     }
 
     @NonNull
