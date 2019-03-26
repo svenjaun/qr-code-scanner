@@ -8,13 +8,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.qr_code_scanner.Activities.MainActivity;
 import com.example.qr_code_scanner.R;
 import com.example.qr_code_scanner.database.QRCodeData;
 import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
@@ -34,8 +37,7 @@ public class DetailFragment extends Fragment {
 	Button detailDelete;
 	QRCodeData qrcodeData;
     ImageView detailQRCode;
-
-    public static final String URL_REGEX = "^((https?|http)://|(www)\\.)?[a-z0-9-]+(\\.[a-z0-9-]+)+([/?].*)?$";
+    DetailFragment detailFragment = this;
 
     @SuppressLint("ValidFragment")
     public DetailFragment(int qrCodeId) {
@@ -50,16 +52,19 @@ public class DetailFragment extends Fragment {
         qrCode = qrcodeData.getQRCodeById(qrCodeId);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         detailQRCode = view.findViewById(R.id.detail_fragment_qr_code);
         detailQRCode.setImageBitmap(qrCode.getQRCode());
-        view.findViewById(R.id.detail_fragment_code_content).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(qrCode.getValue())));
-            }
-        });
+        if ( URLUtil.isValidUrl(qrCode.getValue())) {
+            view.findViewById(R.id.detail_fragment_code_content).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(qrCode.getValue())));
+                }
+            });
+        }
         detailCodeName = view.findViewById(R.id.detail_fragment_code_name);
         detailCodeDate= view.findViewById(R.id.detail_fragment_date);
         detailCodeValue =view.findViewById(R.id.detail_fragment_code_content);
@@ -74,10 +79,15 @@ public class DetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 qrcodeData.removeQRCode(qrCodeId);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getFragmentManager().popBackStackImmediate();
             }
         });
         super.onViewCreated(view, savedInstanceState);
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

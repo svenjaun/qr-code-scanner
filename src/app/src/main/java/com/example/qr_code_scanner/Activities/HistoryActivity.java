@@ -30,6 +30,7 @@ public class HistoryActivity extends AppCompatActivity {
             } catch (Exception e) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.history_fragment,
                         listFragment).commit();
+
             }
         } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.history_fragment,
