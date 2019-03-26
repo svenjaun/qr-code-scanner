@@ -1,6 +1,7 @@
 package com.example.qr_code_scanner.Activities;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -20,16 +21,19 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         listFragment = new ListFragment();
 
         Intent intent = this.getIntent();
         if (intent != null) {
             try {
                 int id = intent.getExtras().getInt("QRCodeID");
+                getFragmentManager().popBackStack();
                 openDetailFragment(id);
             } catch (Exception e) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.history_fragment,
                         listFragment).commit();
+
             }
         } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.history_fragment,

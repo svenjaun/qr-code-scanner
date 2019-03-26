@@ -9,9 +9,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.transition.TransitionInflater;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,8 +98,10 @@ public class EditFragment extends Fragment {
 		editCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent=new Intent(getActivity(),MainActivity.class);
-				startActivity(intent);
+                getFragmentManager().popBackStack();
+
+                mainActivity.findViewById(R.id.qr_code_fab).setVisibility(View.VISIBLE);
+                mainActivity.findViewById(R.id.qr_code_fab).setEnabled(true);
 			}
 		});
         Calendar cal = Calendar.getInstance();
@@ -109,6 +113,9 @@ public class EditFragment extends Fragment {
 			public void onClick(View v) {
 				qrCodeID = createQRCode(editCodeName.getText().toString());
 				Intent intent = new Intent(getActivity(), HistoryActivity.class);
+                getFragmentManager().popBackStack();
+                mainActivity.findViewById(R.id.qr_code_fab).setVisibility(View.VISIBLE);
+                mainActivity.findViewById(R.id.qr_code_fab).setEnabled(true);
 				int i = (int)qrCodeID;
 				if ((long)i != qrCodeID) {
 					throw new IllegalArgumentException(qrCodeID + " cannot be cast to int without changing its value.");
