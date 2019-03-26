@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                         editFragment = new EditFragment(barcodes.valueAt(0).displayValue, thisMainActivity);
                         getSupportFragmentManager().beginTransaction().addToBackStack("edit_fragment").setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_left).replace(
                                 R.id.fragment_holder, editFragment).commit();
-                        floatingActionButton.setVisibility(View.INVISIBLE);
+                        floatingActionButton.setVisibility(View.INVISIBLE); // TODO: non-UI thread-- Future Android will throw an exception.
                         floatingActionButton.setEnabled(false);
                     }
 
@@ -143,8 +143,5 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
         floatingActionButton.setVisibility(View.VISIBLE);
         floatingActionButton.setEnabled(true);
-        Toast.makeText(getApplicationContext(), "This is my Toast message!",
-                Toast.LENGTH_LONG).show();
-
     }
 }

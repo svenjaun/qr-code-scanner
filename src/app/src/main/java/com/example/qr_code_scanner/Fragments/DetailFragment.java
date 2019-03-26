@@ -3,15 +3,11 @@ package com.example.qr_code_scanner.Fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.support.annotation.RequiresApi;
-import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +18,6 @@ import android.widget.TextView;
 import com.example.qr_code_scanner.R;
 import com.example.qr_code_scanner.database.QRCodeData;
 import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
-import com.google.zxing.WriterException;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import androidmads.library.qrgenearator.QRGContents;
-import androidmads.library.qrgenearator.QRGEncoder;
 
 
 @SuppressLint("ValidFragment")
@@ -54,14 +43,14 @@ public class DetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         qrcodeData = new QRCodeData(getContext());
-        qrCode = qrcodeData.getQRCode(qrCodeId);
+        qrCode = qrcodeData.getQRCodeById(qrCodeId);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         detailQRCode = view.findViewById(R.id.detail_fragment_qr_code);
         detailQRCode.setImageBitmap(qrCode.getQRCode());
-        view.findViewById(R.id.detail_fragment_date).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.detail_fragment_code_content).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(qrCode.getValue())));
@@ -74,12 +63,12 @@ public class DetailFragment extends Fragment {
         detailCodeName.setText(qrCode.getName());
         detailCodeDate.setText(qrCode.getDate().toString());
         detailCodeValue.setText(qrCode.getValue());
-        detailDelete.setOnClickListener(new View.OnClickListener() {
+        /*detailDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 qrcodeData.removeQRCode(qrCodeId);
             }
-        });
+        });*/
         super.onViewCreated(view, savedInstanceState);
     }
 

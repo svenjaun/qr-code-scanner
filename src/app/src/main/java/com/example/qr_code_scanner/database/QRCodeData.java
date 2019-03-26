@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class QRCodeData {
 	@NonNull final String tableName = QRCodeDatabaseHelper.TABLE_NAME;
 	private static QRCodeDatabaseHelper dbHelper;
+    private static QRCodeData mInstance = null;
 	@NonNull final String[] columns = new String[]{QRCodeDatabaseHelper.COL_ID,
 			QRCodeDatabaseHelper.COL_NAME,
 			QRCodeDatabaseHelper.COL_VALUE,
@@ -27,6 +28,13 @@ public class QRCodeData {
 	SQLiteDatabase getDb() {
 		return dbHelper.getWritableDatabase();
 	}
+
+   /* public static QRCodeData getInstance(Context ctx) {
+        if (mInstance == null) {
+            mInstance = new QRCodeData(ctx.getApplicationContext());
+        }
+        return mInstance;
+    }*/
 
 	public long createQRCode(@NonNull QRCodeModel qrcode) {
 		long id = -1;
@@ -45,7 +53,7 @@ public class QRCodeData {
 	}
 
 	@Nullable
-	public QRCodeModel getQRCode(@NonNull int qrcodeId) {
+	public QRCodeModel getQRCodeById(@NonNull int qrcodeId) {
 		QRCodeModel result = null;
 		try {
 			Cursor cursor = getDb().query(tableName, columns,
@@ -61,6 +69,23 @@ public class QRCodeData {
 		}
 		return result;
 	}
+
+    public QRCodeModel getQRCodeByName(@NonNull String qrcodeName) {
+        QRCodeModel result = null;
+        try {
+            Cursor cursor = getDb().query(tableName, columns,
+                    QRCodeDatabaseHelper.COL_NAME +
+                            " = \"" + qrcodeName + "\"", null, null, null, null, null);
+            cursor.moveToFirst();
+            if (cursor.getCount() > 0) {
+                result = cursorToQRCode(cursor);
+            }
+            cursor.close();
+        } catch (SQLException e) {
+            System.out.println(	"Database error while querying for certificate with name '" + qrcodeName + "': s" + e);
+        }
+        return result;
+    }
 
 	@NonNull
 	public ArrayList<QRCodeModel> getAllQRCodes() {
@@ -93,7 +118,7 @@ public class QRCodeData {
 	public boolean removeQRCode(int id) {
 		boolean success = false;
 		try {
-			QRCodeModel certificate = getQRCode(id);
+			QRCodeModel certificate = getQRCodeById(id);
 			if (certificate == null) {
 				return false;
 			}
