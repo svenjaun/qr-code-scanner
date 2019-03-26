@@ -9,7 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import android.support.transition.TransitionInflater;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -27,9 +27,11 @@ import com.example.qr_code_scanner.R;
 import com.example.qr_code_scanner.database.QRCodeData;
 import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class EditFragment extends Fragment {
@@ -98,6 +100,10 @@ public class EditFragment extends Fragment {
 				startActivity(intent);
 			}
 		});
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 1);
+        SimpleDateFormat format = new SimpleDateFormat("EEEE dd.MMMM yyyy", Locale.GERMAN);
+		editDate.setText(format.format(cal.getTime()));
 		editSave.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -129,6 +135,5 @@ public class EditFragment extends Fragment {
 		return qrcodeData.createQRCode(
 				new QRCodeModel(qrcodeData.getLatestID(), name, value, new Date().getTime()));
 	}
-
 }
 

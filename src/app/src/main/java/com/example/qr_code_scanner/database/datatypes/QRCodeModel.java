@@ -52,7 +52,7 @@ public class QRCodeModel {
 
 	public Bitmap getQRCode() {
 		Bitmap qrcode;
-		QRGEncoder qrgEncoder = new QRGEncoder(Value, null, QRGContents.Type.TEXT, 200);
+		QRGEncoder qrgEncoder = new QRGEncoder(Value, null, QRGContents.Type.TEXT, 500);
 		try {
 			qrcode = qrgEncoder.encodeAsBitmap();
 		} catch (WriterException e) {
