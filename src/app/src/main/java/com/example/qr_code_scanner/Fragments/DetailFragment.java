@@ -7,7 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,6 +73,7 @@ public class DetailFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				qrcodeData.removeQRCode(qrCodeId);
+
 			}
 		});
 	}

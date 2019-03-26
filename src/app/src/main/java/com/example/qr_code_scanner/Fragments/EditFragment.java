@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -45,6 +46,8 @@ public class EditFragment extends Fragment {
 	private TextView editDate;
 	private TextView editCodeContent;
 	private Button editSave;
+	private FloatingActionButton floatingActionButton;
+	private Button editCancel;
 
 
 	// TODO: Rename and change types of parameters
@@ -87,6 +90,8 @@ public class EditFragment extends Fragment {
 		editDate = view.findViewById(R.id.edit_fragment_date);
 		editCodeContent = view.findViewById(R.id.edit_fragment_code_content);
 		editSave = view.findViewById(R.id.edit_fragment_save);
+		floatingActionButton=view.findViewById(R.id.qr_code_fab);
+		editCancel=view.findViewById(R.id.edit_fragment_cancel);
 		Date date = Calendar.getInstance().getTime();
 		editCodeName.setText("QR-Code" + qrcodeData.getLatestID());
 		editCodeContent.setText(value);
