@@ -19,6 +19,10 @@ import com.example.qr_code_scanner.R;
 import com.example.qr_code_scanner.database.QRCodeData;
 import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 
 @SuppressLint("ValidFragment")
 public class DetailFragment extends Fragment {
@@ -61,7 +65,10 @@ public class DetailFragment extends Fragment {
         detailCodeValue =view.findViewById(R.id.detail_fragment_code_content);
         detailDelete=view.findViewById(R.id.detail_fragment_delete);
         detailCodeName.setText(qrCode.getName());
-        detailCodeDate.setText(qrCode.getDate().toString());
+        Calendar cal = qrCode.getDate();
+        cal.add(Calendar.DATE, 1);
+        SimpleDateFormat format = new SimpleDateFormat("EEEE dd.MMMM yyyy", Locale.GERMAN);
+        detailCodeDate.setText(format.format(cal.getTime()));
         detailCodeValue.setText(qrCode.getValue());
         /*detailDelete.setOnClickListener(new View.OnClickListener() {
             @Override

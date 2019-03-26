@@ -27,9 +27,11 @@ import com.example.qr_code_scanner.R;
 import com.example.qr_code_scanner.database.QRCodeData;
 import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class EditFragment extends Fragment {
@@ -85,10 +87,12 @@ public class EditFragment extends Fragment {
 		editDate = view.findViewById(R.id.edit_fragment_date);
 		editCodeContent = view.findViewById(R.id.edit_fragment_code_content);
 		editSave = view.findViewById(R.id.edit_fragment_save);
-		Date date = Calendar.getInstance().getTime();
 		editCodeName.setText("QR-Code" + qrcodeData.getLatestID());
 		editCodeContent.setText(value);
-		editDate.setText(date.toString());
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 1);
+        SimpleDateFormat format = new SimpleDateFormat("EEEE dd.MMMM yyyy", Locale.GERMAN);
+		editDate.setText(format.format(cal.getTime()));
 		editSave.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
