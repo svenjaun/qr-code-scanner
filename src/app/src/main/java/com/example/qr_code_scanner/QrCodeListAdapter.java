@@ -1,23 +1,26 @@
 package com.example.qr_code_scanner;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.support.constraint.Group;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.qr_code_scanner.Activities.HistoryActivity;
 import com.example.qr_code_scanner.Fragments.DetailFragment;
 import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
+import com.google.zxing.WriterException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
+
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
 
 public class QrCodeListAdapter extends RecyclerView.Adapter<ViewHolder> {
     @NonNull
@@ -26,7 +29,7 @@ public class QrCodeListAdapter extends RecyclerView.Adapter<ViewHolder> {
     @NonNull
     private ArrayList<QRCodeModel> qrCodes;
 
-    TextView qrcodeDataTV;
+
 
     public QrCodeListAdapter(@NonNull Activity activity, @NonNull ArrayList<QRCodeModel> qrCodes, HistoryActivity historyActivity) {
         this.activity = activity;
@@ -38,7 +41,6 @@ public class QrCodeListAdapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
         View v = LayoutInflater.from(activity).inflate(R.layout.list_element, viewGroup, false);
-        qrcodeDataTV = activity.findViewById(R.id.list_element_qr_code_date);
         ViewHolder viewHolder = new ViewHolder(activity, v);
 
 
@@ -67,8 +69,21 @@ public class QrCodeListAdapter extends RecyclerView.Adapter<ViewHolder> {
         viewHolder.getListElementNameTextView().setText(qrCode.getName());
         Calendar cal = qrCode.getDate();
         cal.add(Calendar.DATE, 1);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-        viewHolder.getListEllementDateTextView().setText(cal.getTime().toString());
+        SimpleDateFormat format = new SimpleDateFormat("EEEE dd.MMMM yyyy", Locale.GERMAN);
+        viewHolder.getListEllementDateTextView().setText(format.format(cal.getTime()));
+        viewHolder.getListElementQrCode().setImageBitmap(setQRCode(qrCode.getValue()));
+    }
+
+    private Bitmap setQRCode(String value) {
+        Bitmap qrcode;
+        QRGEncoder qrgEncoder = new QRGEncoder(value, null, QRGContents.Type.TEXT, 100);
+        try {
+            // Getting QR-Code as Bitmap
+            qrcode = qrgEncoder.encodeAsBitmap();
+        } catch (WriterException e) {
+            throw new Error("Error by generation QRCode: " + e);
+        }
+        return qrcode;
     }
 
     @NonNull
