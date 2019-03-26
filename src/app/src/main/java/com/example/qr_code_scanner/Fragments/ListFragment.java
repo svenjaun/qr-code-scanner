@@ -19,6 +19,7 @@ import com.example.qr_code_scanner.QrCodeListAdapter;
 import com.example.qr_code_scanner.R;
 import com.example.qr_code_scanner.database.QRCodeData;
 import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
+import com.google.zxing.qrcode.encoder.QRCode;
 
 import java.util.ArrayList;
 
@@ -38,6 +39,7 @@ public class ListFragment extends Fragment {
 
 	RecyclerView recyclerView;
 
+	QRCodeData qrCodeData;
 
 	private OnFragmentInteractionListener mListener;
 
@@ -62,7 +64,6 @@ public class ListFragment extends Fragment {
 	public void onViewCreated(@NonNull View view,
 	                          @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-
 		recyclerView = view.findViewById(R.id.list_fragment_recycler_view);
 
 		onCreateViewHook(requireActivity(),requireContext(),view,savedInstanceState);
@@ -101,7 +102,7 @@ public class ListFragment extends Fragment {
 	}
 
 	private void setListAdapter(@NonNull FragmentActivity activity, @NonNull View view) {
-		listAdapter = new QrCodeListAdapter(activity, getQrCodes(activity), new HistoryActivity());
+		listAdapter = new QrCodeListAdapter(activity, getQrCodes(activity), new HistoryActivity(), getContext());
 		listAdapter.registerAdapterDataObserver(new ListDataObserver(view, listAdapter));
 		recyclerView.setAdapter(listAdapter);
 	}

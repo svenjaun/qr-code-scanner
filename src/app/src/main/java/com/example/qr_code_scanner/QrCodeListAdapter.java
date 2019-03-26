@@ -3,6 +3,7 @@ package com.example.qr_code_scanner;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,9 +18,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.qr_code_scanner.Activities.HistoryActivity;
 import com.example.qr_code_scanner.Fragments.DetailFragment;
+import com.example.qr_code_scanner.database.QRCodeData;
 import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
 import com.google.zxing.WriterException;
 
@@ -37,14 +40,19 @@ public class QrCodeListAdapter extends RecyclerView.Adapter<ViewHolder> {
     private HistoryActivity historyActivity;
     @NonNull
     private ArrayList<QRCodeModel> qrCodes;
+    private QRCodeData qrCodeData;
+    private QRCodeModel qrcode;
 
 
 
-    public QrCodeListAdapter(@NonNull Activity activity, @NonNull ArrayList<QRCodeModel> qrCodes, HistoryActivity historyActivity) {
+    public QrCodeListAdapter(@NonNull Activity activity, @NonNull ArrayList<QRCodeModel> qrCodes, HistoryActivity historyActivity, Context context) {
         this.activity = activity;
         this.historyActivity = historyActivity;
         this.qrCodes = qrCodes;
+       qrCodeData = new QRCodeData(context.getApplicationContext());
     }
+
+
 
     @NonNull
     @Override
@@ -55,9 +63,11 @@ public class QrCodeListAdapter extends RecyclerView.Adapter<ViewHolder> {
             @SuppressLint("NewApi")
             @Override
             public void onClick(View view) {
-               // activity.getFragmentManager().beginTransaction().replace(R.id.history_fragment, new DetailFragment()).addToBackStack(null).commit();
-               // historyActivity.getSupportFragmentManager().beginTransaction().replace(R.id.history_fragment, new DetailFragment(i)).addToBackStack(null).commit();
-                activity.getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_left).replace(R.id.history_fragment, new DetailFragment(i)).addToBackStack(null).commit();
+                TextView qrCodeName = view.findViewById(R.id.list_element_qr_code_name);
+                StringBuilder string = new StringBuilder(qrCodeName.getText().length());
+                string.append(qrCodeName.getText());
+                qrcode = qrCodeData.getQRCodeByName(string.toString());
+                activity.getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_left).replace(R.id.history_fragment, new DetailFragment(qrcode.getID())).addToBackStack(null).commit();
             }
         });
 

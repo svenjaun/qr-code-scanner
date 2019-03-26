@@ -2,10 +2,10 @@ package com.example.qr_code_scanner.Fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
@@ -29,9 +29,10 @@ public class DetailFragment extends Fragment {
 	TextView detailCodeValue;
 	Button detailDelete;
 	QRCodeData qrcodeData;
+    ImageView detailQRCode;
 
+    public static final String URL_REGEX = "^((https?|http)://|(www)\\.)?[a-z0-9-]+(\\.[a-z0-9-]+)+([/?].*)?$";
 
-	ImageView detailQRCode;
     @SuppressLint("ValidFragment")
     public DetailFragment(int qrCodeId) {
         this.qrCodeId = qrCodeId;
@@ -42,7 +43,33 @@ public class DetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         qrcodeData = new QRCodeData(getContext());
-        qrCode = qrcodeData.getQRCode(qrCodeId);
+        qrCode = qrcodeData.getQRCodeById(qrCodeId);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        detailQRCode = view.findViewById(R.id.detail_fragment_qr_code);
+        detailQRCode.setImageBitmap(qrCode.getQRCode());
+        view.findViewById(R.id.detail_fragment_code_content).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(qrCode.getValue())));
+            }
+        });
+        detailCodeName = view.findViewById(R.id.detail_fragment_code_name);
+        detailCodeDate= view.findViewById(R.id.detail_fragment_date);
+        detailCodeValue =view.findViewById(R.id.detail_fragment_code_content);
+        detailDelete=view.findViewById(R.id.detail_fragment_delete);
+        detailCodeName.setText(qrCode.getName());
+        detailCodeDate.setText(qrCode.getDate().toString());
+        detailCodeValue.setText(qrCode.getValue());
+        detailDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qrcodeData.removeQRCode(qrCodeId);
+            }
+        });
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -50,28 +77,6 @@ public class DetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_detail, container, false);
     }
-
-	@Override
-	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-
-		detailQRCode = view.findViewById(R.id.detail_fragment_qr_code);
-		detailQRCode.setImageBitmap(qrCode.getQRCode());
-		detailCodeName = view.findViewById(R.id.detail_fragment_code_name);
-		detailCodeDate= view.findViewById(R.id.detail_fragment_date);
-		detailCodeValue =view.findViewById(R.id.detail_fragment_code_content);
-		detailDelete=view.findViewById(R.id.detail_fragment_delete);
-		detailCodeName.setText(qrCode.getName());
-		detailCodeDate.setText(qrCode.getDate().toString());
-		detailCodeValue.setText(qrCode.getValue());
-		detailDelete.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				qrcodeData.removeQRCode(qrCodeId);
-
-			}
-		});
-	}
 
 	@Override
     public void onAttach(Context context) {

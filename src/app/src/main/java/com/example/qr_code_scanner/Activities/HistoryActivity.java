@@ -28,14 +28,13 @@ public class HistoryActivity extends AppCompatActivity {
                 int id = intent.getExtras().getInt("QRCodeID");
                 openDetailFragment(id);
             } catch (Exception e) {
-                System.out.println(e);
+                getSupportFragmentManager().beginTransaction().replace(R.id.history_fragment,
+                        listFragment).commit();
             }
         } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.history_fragment,
                     listFragment).commit();
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.history_fragment,
-                listFragment).commit();
     }
 
     @Override
