@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.qr_code_scanner.Activities.MainActivity;
 import com.example.qr_code_scanner.Activities.HistoryActivity;
@@ -28,6 +29,7 @@ import com.example.qr_code_scanner.QrCodeListAdapter;
 import com.example.qr_code_scanner.R;
 import com.example.qr_code_scanner.database.QRCodeData;
 import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
+import com.google.zxing.common.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -111,7 +113,11 @@ public class EditFragment extends Fragment {
 		editSave.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				qrCodeID = createQRCode(editCodeName.getText().toString());
+			    String name = editCodeName.getText().toString();
+			    if (name.trim().isEmpty()){
+                    name = "QR-Code" + qrcodeData.getLatestID();
+                }
+				qrCodeID = createQRCode(name);
 				Intent intent = new Intent(getActivity(), HistoryActivity.class);
                 getFragmentManager().popBackStack();
                 mainActivity.findViewById(R.id.qr_code_fab).setVisibility(View.VISIBLE);
