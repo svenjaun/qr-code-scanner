@@ -26,6 +26,7 @@ public class HistoryActivity extends AppCompatActivity {
         if (intent != null) {
             try {
                 int id = intent.getExtras().getInt("QRCodeID");
+                getFragmentManager().popBackStack();
                 openDetailFragment(id);
             } catch (Exception e) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.history_fragment,
