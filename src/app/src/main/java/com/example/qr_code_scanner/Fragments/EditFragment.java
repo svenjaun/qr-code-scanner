@@ -5,11 +5,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.qr_code_scanner.Activities.MainActivity;
 import com.example.qr_code_scanner.Activities.HistoryActivity;
 import com.example.qr_code_scanner.QrCodeListAdapter;
 import com.example.qr_code_scanner.R;
@@ -29,24 +32,17 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link EditFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- */
 public class EditFragment extends Fragment {
-	// TODO: Rename parameter arguments, choose names that match
-	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-	@Nullable
-	private QrCodeListAdapter listAdapter;
-	RecyclerView recyclerView;
-
-	private EditText editCodeName;
-	private TextView editDate;
-	private TextView editCodeContent;
-	private Button editSave;
-	private FloatingActionButton floatingActionButton;
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    @Nullable
+    private QrCodeListAdapter listAdapter;
+     RecyclerView recyclerView;
+    private MainActivity mainActivity;
+    private EditText editCodeName;
+    private TextView editDate;
+    private TextView editCodeContent;
+    private Button editSave;
 	private Button editCancel;
 
 
@@ -54,16 +50,16 @@ public class EditFragment extends Fragment {
 	private String mParam1;
 	private String value;
 
-	private OnFragmentInteractionListener mListener;
 
 	public EditFragment() {
 
 	}
 
-	@SuppressLint("ValidFragment")
-	public EditFragment(String value) {
-		this.value = value;
-	}
+    @SuppressLint("ValidFragment")
+    public EditFragment(String value, MainActivity mainActivity) {
+        this.value = value;
+        this.mainActivity = mainActivity;
+    }
 
 	QRCodeData qrcodeData;
 	long qrCodeID;
@@ -80,8 +76,8 @@ public class EditFragment extends Fragment {
 	                         Bundle savedInstanceState) {
 
 
-		return inflater.inflate(R.layout.fragment_edit, container, false);
-	}
+        return inflater.inflate(R.layout.fragment_edit, container, false);
+    }
 
 	@SuppressLint("SetTextI18n")
 	@Override
@@ -90,12 +86,18 @@ public class EditFragment extends Fragment {
 		editDate = view.findViewById(R.id.edit_fragment_date);
 		editCodeContent = view.findViewById(R.id.edit_fragment_code_content);
 		editSave = view.findViewById(R.id.edit_fragment_save);
-		floatingActionButton=view.findViewById(R.id.qr_code_fab);
 		editCancel=view.findViewById(R.id.edit_fragment_cancel);
 		Date date = Calendar.getInstance().getTime();
 		editCodeName.setText("QR-Code" + qrcodeData.getLatestID());
 		editCodeContent.setText(value);
 		editDate.setText(date.toString());
+		editCancel.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(getActivity(),MainActivity.class);
+				startActivity(intent);
+			}
+		});
 		editSave.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -118,26 +120,10 @@ public class EditFragment extends Fragment {
 		qrcodeData = new QRCodeData(context);
 	}
 
-	@Override
-	public void onDetach() {
-		super.onDetach();
-		mListener = null;
-	}
-
-	/**
-	 * This interface must be implemented by activities that contain this
-	 * fragment to allow an interaction in this fragment to be communicated
-	 * to the activity and potentially other fragments contained in that
-	 * activity.
-	 * <p>
-	 * See the Android Training lesson <a href=
-	 * "http://developer.android.com/training/basics/fragments/communicating.html"
-	 * >Communicating with Other Fragments</a> for more information.
-	 */
-	public interface OnFragmentInteractionListener {
-		// TODO: Update argument type and name
-		void onFragmentInteraction(Uri uri);
-	}
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
 
 	private long createQRCode(String name) {
 		return qrcodeData.createQRCode(

@@ -75,6 +75,8 @@ public class ListFragment extends Fragment {
 		setListAdapter(activity, v);
 	}
 
+
+
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
