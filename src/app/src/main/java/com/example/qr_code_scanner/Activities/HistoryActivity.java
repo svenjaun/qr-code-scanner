@@ -9,9 +9,6 @@ import com.example.qr_code_scanner.Fragments.DetailFragment;
 import com.example.qr_code_scanner.Fragments.ListFragment;
 import com.example.qr_code_scanner.R;
 
-import java.util.concurrent.ExecutionException;
-
-
 public class HistoryActivity extends AppCompatActivity {
 
     ListFragment listFragment;

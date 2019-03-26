@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +56,9 @@ public class DetailFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         detailQRCode = view.findViewById(R.id.detail_fragment_qr_code);
         detailQRCode.setImageBitmap(qrCode.getQRCode());
+        detailCodeValue =view.findViewById(R.id.detail_fragment_code_content);
         if ( URLUtil.isValidUrl(qrCode.getValue())) {
+            detailCodeValue.setTextColor(0xFF627ED2);
             view.findViewById(R.id.detail_fragment_code_content).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -67,7 +68,6 @@ public class DetailFragment extends Fragment {
         }
         detailCodeName = view.findViewById(R.id.detail_fragment_code_name);
         detailCodeDate= view.findViewById(R.id.detail_fragment_date);
-        detailCodeValue =view.findViewById(R.id.detail_fragment_code_content);
         detailDelete=view.findViewById(R.id.detail_fragment_delete);
         detailCodeName.setText(qrCode.getName());
         Calendar cal = qrCode.getDate();
