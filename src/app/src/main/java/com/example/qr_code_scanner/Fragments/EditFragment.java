@@ -3,9 +3,11 @@ package com.example.qr_code_scanner.Fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.transition.TransitionInflater;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.qr_code_scanner.Activities.MainActivity;
 import com.example.qr_code_scanner.QrCodeListAdapter;
 import com.example.qr_code_scanner.R;
 import com.example.qr_code_scanner.database.QRCodeData;
@@ -34,7 +37,7 @@ public class EditFragment extends Fragment {
     @Nullable
     private QrCodeListAdapter listAdapter;
      RecyclerView recyclerView;
-
+    private MainActivity mainActivity;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -47,8 +50,9 @@ public class EditFragment extends Fragment {
     }
 
     @SuppressLint("ValidFragment")
-    public EditFragment(String value) {
+    public EditFragment(String value, MainActivity mainActivity) {
         this.value = value;
+        this.mainActivity = mainActivity;
     }
 
     @SuppressLint("RestrictedApi")
@@ -57,6 +61,7 @@ public class EditFragment extends Fragment {
         recyclerView = getActivity().findViewById(R.id.list_fragment_recycler_view);
         super.onCreate(savedInstanceState);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,8 +79,13 @@ public class EditFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
     public void onCreateViewHook(@NonNull FragmentActivity activity,
                                  @NonNull Context context, @NonNull View v,
                                  @Nullable Bundle savedInstanceState) {

@@ -20,6 +20,7 @@
             android:layout_width="100dp"
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
+        android:transitionName="@string/simple_fragment_transition"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginRight="16dp"/>

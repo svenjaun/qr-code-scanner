@@ -1,6 +1,7 @@
 package com.example.qr_code_scanner.Activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     EditFragment editFragment;
     FloatingActionButton floatingActionButton;
     Activity thisActivity = this;
+    MainActivity thisMainActivity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,39 +46,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        txtBarcodeValue = findViewById(R.id.qr_code_no_code_text);
         surfaceView = findViewById(R.id.qr_code_surfaceView);
         floatingActionButton = findViewById(R.id.qr_code_fab);
-
-        //TODO use for opening link in detail view
-                /*if (intentData.length() > 0) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(intentData)));
-                }*/
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(thisActivity, HistoryActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }
 
+    //Configurations for QRCode-scanner
     private void initialiseDetectorsAndSources() {
-
-        Toast.makeText(getApplicationContext(), "Barcode scanner started",
-                Toast.LENGTH_SHORT).show();
-
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
                 .build();
 
         cameraSource = new CameraSource.Builder(this, barcodeDetector)
                 .setRequestedPreviewSize(1920, 1080)
-                .setAutoFocusEnabled(true) //you should add this feature
+                .setAutoFocusEnabled(true)
                 .build();
 
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
+            // Ask for Camera rights
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 try {
@@ -87,18 +82,16 @@ public class MainActivity extends AppCompatActivity {
                         ActivityCompat.requestPermissions(MainActivity.this, new
                                 String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                     }
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             }
 
+            // Camera stops before the surface is being destroyed.
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
                 cameraSource.stop();
@@ -109,32 +102,49 @@ public class MainActivity extends AppCompatActivity {
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-                Toast.makeText(getApplicationContext(),
-                        "To prevent memory leaks barcode scanner has been stopped",
-                        Toast.LENGTH_SHORT).show();
             }
 
+            // If QRCode is scanned, open the edit_fragment with the value of the Code but if edit_fragment is already in the backstack: do nothing
+            @SuppressLint("RestrictedApi")
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
-                    editFragment = new EditFragment(barcodes.valueAt(0).displayValue);
-                    getSupportFragmentManager().beginTransaction().replace(
-                            R.id.fragment_holder, editFragment).commit();
+                    if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                        editFragment = new EditFragment(barcodes.valueAt(0).displayValue, thisMainActivity);
+                        getSupportFragmentManager().beginTransaction().addToBackStack("edit_fragment").setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_left).replace(
+                                R.id.fragment_holder, editFragment).commit();
+                        floatingActionButton.setVisibility(View.INVISIBLE);
+                        floatingActionButton.setEnabled(false);
+                    }
+
                 }
             }
         });
     }
 
+    // Stops the camera and releases all Resources
     @Override
     protected void onPause() {
         super.onPause();
         cameraSource.release();
     }
 
+    // Reloads the Camera
     @Override
     protected void onResume() {
         super.onResume();
         initialiseDetectorsAndSources();
+    }
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        floatingActionButton.setVisibility(View.VISIBLE);
+        floatingActionButton.setEnabled(true);
+        Toast.makeText(getApplicationContext(), "This is my Toast message!",
+                Toast.LENGTH_LONG).show();
+
     }
 }

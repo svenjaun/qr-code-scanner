@@ -34,7 +34,6 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     public ViewHolder(@NonNull Context context, @NonNull View view) {
         super(view);
         scanner = view.findViewById(R.id.qr_code_surfaceView);
-        qrCodeTextview = view.findViewById(R.id.qr_code_no_code_text);
         floatingActionButton = view.findViewById(R.id.qr_code_fab);
         listElementQrCode = view.findViewById(R.id.list_element_qr_code);
         listElementNameTextView = view.findViewById(R.id.list_element_qr_code_name);

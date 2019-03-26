@@ -1,11 +1,14 @@
 package com.example.qr_code_scanner.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.RequiresApi;
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,9 @@ import com.example.qr_code_scanner.R;
 import com.example.qr_code_scanner.database.QRCodeData;
 import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
 import com.google.zxing.WriterException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -26,6 +32,7 @@ public class DetailFragment extends Fragment {
     QRCodeModel qrCode;
     QRCodeData qrcodeData;
     int qrCodeId;
+    public static final String URL_REGEX = "^((https?|http)://|(www)\\.)?[a-z0-9-]+(\\.[a-z0-9-]+)+([/?].*)?$";
 
     public DetailFragment() {
         // Required empty public constructor
@@ -43,7 +50,13 @@ public class DetailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         detailQRCode = view.findViewById(R.id.detail_fragment_qr_code);
-        detailQRCode.setImageBitmap(setQRCode(qrCode.getValue()));
+        detailQRCode.setImageBitmap(qrCode.getQRCode());
+        view.findViewById(R.id.detail_fragment_date).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(qrCode.getValue())));
+            }
+        });
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -64,15 +77,5 @@ public class DetailFragment extends Fragment {
         super.onDetach();
     }
 
-    private Bitmap setQRCode(String value) {
-        Bitmap qrcode;
-        QRGEncoder qrgEncoder = new QRGEncoder(value, null, QRGContents.Type.TEXT, 200);
-        try {
-            // Getting QR-Code as Bitmap
-            qrcode = qrgEncoder.encodeAsBitmap();
-        } catch (WriterException e) {
-            throw new Error("---------------------------------------------Error by generation QRCode: " + e);
-        }
-        return qrcode;
-    }
+
 }

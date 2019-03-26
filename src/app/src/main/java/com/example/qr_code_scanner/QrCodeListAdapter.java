@@ -1,13 +1,22 @@
 package com.example.qr_code_scanner;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.transition.FragmentTransitionSupport;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.transition.Transition;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.qr_code_scanner.Fragments.DetailFragment;
 import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
@@ -37,12 +46,11 @@ public class QrCodeListAdapter extends RecyclerView.Adapter<ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(activity).inflate(R.layout.list_element, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(activity, v);
-
-
         v.findViewById(R.id.list_element).setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NewApi")
             @Override
             public void onClick(View view) {
-                activity.getFragmentManager().beginTransaction().replace(R.id.history_fragment, new DetailFragment()).addToBackStack(null).commit();
+                activity.getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_left).replace(R.id.history_fragment, new DetailFragment()).addToBackStack(null).commit();
             }
         });
 
@@ -66,19 +74,7 @@ public class QrCodeListAdapter extends RecyclerView.Adapter<ViewHolder> {
         cal.add(Calendar.DATE, 1);
         SimpleDateFormat format = new SimpleDateFormat("EEEE dd.MMMM yyyy", Locale.GERMAN);
         viewHolder.getListEllementDateTextView().setText(format.format(cal.getTime()));
-        viewHolder.getListElementQrCode().setImageBitmap(setQRCode(qrCode.getValue()));
-    }
-
-    private Bitmap setQRCode(String value) {
-        Bitmap qrcode;
-        QRGEncoder qrgEncoder = new QRGEncoder(value, null, QRGContents.Type.TEXT, 100);
-        try {
-            // Getting QR-Code as Bitmap
-            qrcode = qrgEncoder.encodeAsBitmap();
-        } catch (WriterException e) {
-            throw new Error("Error by generation QRCode: " + e);
-        }
-        return qrcode;
+        viewHolder.getListElementQrCode().setImageBitmap(qrCode.getQRCode());
     }
 
     @NonNull
