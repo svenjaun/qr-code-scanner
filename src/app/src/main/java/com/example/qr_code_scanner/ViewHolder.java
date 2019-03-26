@@ -26,10 +26,6 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     private TextView detailCodeName;
     private TextView detailDate;
     private TextView detailCodeContent;
-    private EditText editCodeName;
-    private TextView editDate;
-    private LinearLayout listFragmentempty;
-    private TextView editCodeContent;
 
     public ViewHolder(@NonNull Context context, @NonNull View view) {
         super(view);
@@ -42,10 +38,6 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         detailCodeName = view.findViewById(R.id.detail_fragment_code_name);
         detailDate = view.findViewById(R.id.detail_fragment_date);
         detailCodeContent = view.findViewById(R.id.detail_fragment_code_content);
-        editCodeName = view.findViewById(R.id.edit_fragment_code_name);
-        editDate = view.findViewById(R.id.edit_fragment_date);
-        editCodeContent = view.findViewById(R.id.edit_fragment_code_content);
-        listFragmentempty = view.findViewById(R.id.list_fragment_empty);
 
 
         this.context = context;
@@ -94,17 +86,5 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
     public TextView getDetailCodeContent() {
         return detailCodeContent;
-    }
-
-    public EditText getEditCodeName() {
-        return editCodeName;
-    }
-
-    public TextView getEditDate() {
-        return editDate;
-    }
-
-    public TextView getEditCodeContent() {
-        return editCodeContent;
     }
 }

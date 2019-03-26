@@ -7,4 +7,4 @@
     tools:context=".Activities.HistoryActivity"
     android:id="@+id/history_fragment">
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>

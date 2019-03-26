@@ -108,16 +108,16 @@ public class QRCodeData {
 	public int getLatestID() {
 		int id;
 		try {
-			Cursor cursor = getDb().query(tableName, columns, null, null, null, null, null, null);
+			Cursor  cursor = getDb().rawQuery("select * from " + tableName,null);
 			cursor.moveToLast();
-			if (cursor.getCount() > 0) {
+			if (cursor.getCount() <= 0) {
 				return 1;
 			}
+
 			id = cursorToQRCode(cursor).getID() + 1;
 			cursor.close();
-			return id;
-		} catch (SQLException e) {
-			System.out.println(	"Database error while get id or no entry in db: " + e);
+		} catch (Exception e) {
+			System.out.println(	"Database error while get id or no entry in db: ------------------------------------------------------------------------------" + e);
 			id = 0;
 		}
 		return id;

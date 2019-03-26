@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.qr_code_scanner.Activities.HistoryActivity;
 import com.example.qr_code_scanner.QrCodeListAdapter;
 import com.example.qr_code_scanner.R;
 import com.example.qr_code_scanner.database.QRCodeData;
@@ -100,7 +101,7 @@ public class ListFragment extends Fragment {
 	}
 
 	private void setListAdapter(@NonNull FragmentActivity activity, @NonNull View view) {
-		listAdapter = new QrCodeListAdapter(activity, getQrCodes(activity));
+		listAdapter = new QrCodeListAdapter(activity, getQrCodes(activity), new HistoryActivity());
 		listAdapter.registerAdapterDataObserver(new ListDataObserver(view, listAdapter));
 		recyclerView.setAdapter(listAdapter);
 	}

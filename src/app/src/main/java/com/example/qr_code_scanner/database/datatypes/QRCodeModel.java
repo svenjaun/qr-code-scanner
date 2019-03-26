@@ -1,5 +1,6 @@
 package com.example.qr_code_scanner.database.datatypes;
 import android.graphics.Bitmap;
+
 import android.support.annotation.NonNull;
 
 import com.google.zxing.WriterException;

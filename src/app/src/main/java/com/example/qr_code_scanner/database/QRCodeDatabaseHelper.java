@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+
 public class QRCodeDatabaseHelper extends SQLiteOpenHelper {
 	@Nullable
     private static QRCodeDatabaseHelper instance = null;

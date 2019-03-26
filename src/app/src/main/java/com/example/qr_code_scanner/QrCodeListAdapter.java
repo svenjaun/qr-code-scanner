@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.qr_code_scanner.Activities.HistoryActivity;
 import com.example.qr_code_scanner.Fragments.DetailFragment;
 import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
 import com.google.zxing.WriterException;
@@ -33,24 +34,30 @@ import androidmads.library.qrgenearator.QRGEncoder;
 public class QrCodeListAdapter extends RecyclerView.Adapter<ViewHolder> {
     @NonNull
     private Activity activity;
+    private HistoryActivity historyActivity;
     @NonNull
     private ArrayList<QRCodeModel> qrCodes;
 
-    public QrCodeListAdapter(@NonNull Activity activity, @NonNull ArrayList<QRCodeModel> qrCodes) {
+
+
+    public QrCodeListAdapter(@NonNull Activity activity, @NonNull ArrayList<QRCodeModel> qrCodes, HistoryActivity historyActivity) {
         this.activity = activity;
+        this.historyActivity = historyActivity;
         this.qrCodes = qrCodes;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
         View v = LayoutInflater.from(activity).inflate(R.layout.list_element, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(activity, v);
         v.findViewById(R.id.list_element).setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NewApi")
             @Override
             public void onClick(View view) {
-                activity.getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_left).replace(R.id.history_fragment, new DetailFragment()).addToBackStack(null).commit();
+               // activity.getFragmentManager().beginTransaction().replace(R.id.history_fragment, new DetailFragment()).addToBackStack(null).commit();
+               // historyActivity.getSupportFragmentManager().beginTransaction().replace(R.id.history_fragment, new DetailFragment(i)).addToBackStack(null).commit();
+                activity.getFragmentManager().beginTransaction().setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_left).replace(R.id.history_fragment, new DetailFragment(i)).addToBackStack(null).commit();
             }
         });
 
