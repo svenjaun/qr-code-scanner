@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qr_code_scanner.Fragments.EditFragment;
@@ -29,7 +29,6 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     SurfaceView surfaceView;
-    TextView txtBarcodeValue;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
@@ -58,6 +57,17 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                Toast.makeText(thisActivity.getBaseContext(), "You have to give the Camera the Permission to work.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     //Configurations for QRCode-scanner
@@ -99,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
@@ -115,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                         editFragment = new EditFragment(barcodes.valueAt(0).displayValue, thisMainActivity);
                         getSupportFragmentManager().beginTransaction().addToBackStack("edit_fragment").setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_left).replace(
                                 R.id.fragment_holder, editFragment).commit();
-                        floatingActionButton.setVisibility(View.INVISIBLE); // TODO: non-UI thread-- Future Android will throw an exception.
+                        floatingActionButton.setVisibility(View.INVISIBLE);
                         floatingActionButton.setEnabled(false);
                     }
 

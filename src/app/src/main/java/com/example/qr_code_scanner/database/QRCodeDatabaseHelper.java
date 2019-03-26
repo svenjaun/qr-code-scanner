@@ -37,12 +37,10 @@ public class QRCodeDatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(TABLE_CREATE);
 	}
 
-	@Override
-	public void onUpgrade(@NonNull SQLiteDatabase db, int oldVersion, int newVersion) {
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 
-	}
-
-	static QRCodeDatabaseHelper getInstance(@NonNull Context context) {
+    static QRCodeDatabaseHelper getInstance(@NonNull Context context) {
 		if (instance == null) {
 			instance = new QRCodeDatabaseHelper(context);
 		}

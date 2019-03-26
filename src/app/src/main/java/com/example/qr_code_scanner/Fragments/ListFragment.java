@@ -1,7 +1,6 @@
 package com.example.qr_code_scanner.Fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,39 +13,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.qr_code_scanner.Activities.HistoryActivity;
 import com.example.qr_code_scanner.QrCodeListAdapter;
 import com.example.qr_code_scanner.R;
 import com.example.qr_code_scanner.database.QRCodeData;
 import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
-import com.google.zxing.qrcode.encoder.QRCode;
 
 import java.util.ArrayList;
 
-
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ListFragment#} factory method to
- * create an instance of this fragment.
- */
 public class ListFragment extends Fragment {
-	// TODO: Rename parameter arguments, choose names that match
-	@Nullable private QrCodeListAdapter listAdapter;
 
-	RecyclerView recyclerView;
-
-	QRCodeData qrCodeData;
-
-	private OnFragmentInteractionListener mListener;
+    RecyclerView recyclerView;
 
 	public ListFragment() {
 		// Required empty public constructor
 	}
-
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -76,18 +56,14 @@ public class ListFragment extends Fragment {
 		setListAdapter(activity, v);
 	}
 
-
-
 	@Override
 	public void onAttach(Context context) {
 		super.onAttach(context);
-
 	}
 
 	@Override
 	public void onDetach() {
 		super.onDetach();
-		mListener = null;
 	}
 
 	private void setLayoutManager(@NonNull Context context) {
@@ -102,14 +78,8 @@ public class ListFragment extends Fragment {
 	}
 
 	private void setListAdapter(@NonNull FragmentActivity activity, @NonNull View view) {
-		listAdapter = new QrCodeListAdapter(activity, getQrCodes(activity), new HistoryActivity(), getContext());
+        QrCodeListAdapter listAdapter = new QrCodeListAdapter(activity, getQrCodes(activity), getContext());
 		listAdapter.registerAdapterDataObserver(new ListDataObserver(view, listAdapter));
 		recyclerView.setAdapter(listAdapter);
 	}
-	public interface OnFragmentInteractionListener {
-		// TODO: Update argument type and name
-		void onFragmentInteraction(Uri uri);
-	}
-
-
 }

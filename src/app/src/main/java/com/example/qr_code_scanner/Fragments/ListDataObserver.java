@@ -9,11 +9,12 @@ import com.example.qr_code_scanner.QrCodeListAdapter;
 import com.example.qr_code_scanner.R;
 
 public class ListDataObserver extends RecyclerView.AdapterDataObserver {
+
     @NonNull
     private QrCodeListAdapter listAdapter;
 
-    RecyclerView recyclerView;
-    LinearLayout emptyListView;
+    private RecyclerView recyclerView;
+    private LinearLayout emptyListView;
 
     ListDataObserver(@NonNull View view, @NonNull QrCodeListAdapter listAdapter) {
         this.listAdapter = listAdapter;

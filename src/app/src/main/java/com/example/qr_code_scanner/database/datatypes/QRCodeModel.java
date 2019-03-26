@@ -1,11 +1,8 @@
 package com.example.qr_code_scanner.database.datatypes;
 import android.graphics.Bitmap;
 
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 
-import com.example.qr_code_scanner.R;
 import com.google.zxing.WriterException;
 
 import java.util.Calendar;
@@ -13,7 +10,6 @@ import java.util.Calendar;
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
-@SuppressWarnings("unused")
 public class QRCodeModel {
 	@NonNull private final int ID;
 	@NonNull private final String Name;
@@ -51,17 +47,13 @@ public class QRCodeModel {
 	}
 
 	public Bitmap getQRCode() {
-		Bitmap qrcode;
+		Bitmap qrCode;
 		QRGEncoder qrgEncoder = new QRGEncoder(Value, null, QRGContents.Type.TEXT, 500);
 		try {
-			qrcode = qrgEncoder.encodeAsBitmap();
+			qrCode = qrgEncoder.encodeAsBitmap();
 		} catch (WriterException e) {
-			throw new Error("--------------------------Error while generating QRCode: " + e);
+			throw new Error("Error while generating QRCode: " + e);
 		}
-		if (qrcode == null) {
-
-
-		}
-		return qrcode;
+		return qrCode;
 	}
 }

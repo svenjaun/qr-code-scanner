@@ -13,14 +13,12 @@ public class HistoryActivity extends AppCompatActivity {
 
     ListFragment listFragment;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         listFragment = new ListFragment();
-
         Intent intent = this.getIntent();
         if (intent != null) {
             try {
@@ -30,7 +28,6 @@ public class HistoryActivity extends AppCompatActivity {
             } catch (Exception e) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.history_fragment,
                         listFragment).commit();
-
             }
         } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.history_fragment,
@@ -43,7 +40,6 @@ public class HistoryActivity extends AppCompatActivity {
         super.finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
-
 
     public void openDetailFragment(int id) {
         DetailFragment detailFragment = new DetailFragment(id);

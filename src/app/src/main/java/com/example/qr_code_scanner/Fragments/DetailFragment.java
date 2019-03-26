@@ -1,7 +1,9 @@
 package com.example.qr_code_scanner.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -15,6 +17,7 @@ import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.qr_code_scanner.Activities.MainActivity;
 import com.example.qr_code_scanner.R;
@@ -36,7 +39,6 @@ public class DetailFragment extends Fragment {
 	Button detailDelete;
 	QRCodeData qrcodeData;
     ImageView detailQRCode;
-    DetailFragment detailFragment = this;
 
     @SuppressLint("ValidFragment")
     public DetailFragment(int qrCodeId) {
@@ -51,7 +53,26 @@ public class DetailFragment extends Fragment {
         qrCode = qrcodeData.getQRCodeById(qrCodeId);
     }
 
-    @SuppressLint("ResourceAsColor")
+
+    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    if (!qrcodeData.removeQRCode(qrCodeId)){
+                        Toast.makeText(getActivity(), "QRCode didn't exists", Toast.LENGTH_LONG).show();
+                    }
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                    getFragmentManager().popBackStackImmediate();
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    break;
+            }
+        }
+    };
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         detailQRCode = view.findViewById(R.id.detail_fragment_qr_code);
@@ -76,18 +97,17 @@ public class DetailFragment extends Fragment {
         detailCodeDate.setText(format.format(cal.getTime()));
         detailCodeValue.setText(qrCode.getValue());
         detailDelete.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                qrcodeData.removeQRCode(qrCodeId);
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-                getFragmentManager().popBackStackImmediate();
+                AlertDialog.Builder messageBox = new AlertDialog.Builder(getContext());
+                messageBox.setMessage("Are you sure you want to delete the QRCode?")
+                        .setNegativeButton("No, cancel", dialogClickListener)
+                        .setPositiveButton("Yes", dialogClickListener).show();
             }
         });
         super.onViewCreated(view, savedInstanceState);
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
