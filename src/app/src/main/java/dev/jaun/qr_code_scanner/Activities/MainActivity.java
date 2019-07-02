@@ -6,25 +6,27 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
 
-import dev.jaun.qr_code_scanner.Fragments.EditFragment;
-import dev.jaun.qr_code_scanner.R;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+
+import dev.jaun.qr_code_scanner.Fragments.EditFragment;
+import dev.jaun.qr_code_scanner.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,12 +38,12 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     Activity thisActivity = this;
     MainActivity thisMainActivity = this;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initViews();
     }
 
@@ -57,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+        toolbar = findViewById(R.id.toolbar_main);
+        toolbar.setTitle(R.string.app_name);
     }
 
     @Override
