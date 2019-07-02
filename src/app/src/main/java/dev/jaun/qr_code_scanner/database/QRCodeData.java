@@ -1,4 +1,4 @@
-package com.example.qr_code_scanner.database;
+package dev.jaun.qr_code_scanner.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
+import dev.jaun.qr_code_scanner.database.datatypes.QRCodeModel;
 
 import java.util.ArrayList;
 

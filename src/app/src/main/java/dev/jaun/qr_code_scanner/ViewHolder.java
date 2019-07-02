@@ -1,4 +1,4 @@
-package com.example.qr_code_scanner;
+package dev.jaun.qr_code_scanner;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import dev.jaun.qr_code_scanner.R;
 
 public class ViewHolder extends RecyclerView.ViewHolder {
     @NonNull

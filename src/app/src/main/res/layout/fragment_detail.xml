@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="#ffffff"
     android:layout_height="match_parent"
-    tools:context=".Fragments.DetailFragment"
+    tools:context="dev.jaun.qr_code_scanner.Fragments.DetailFragment"
     android:clickable="true"
     android:padding="8dp">
 

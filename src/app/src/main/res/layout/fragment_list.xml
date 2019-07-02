@@ -5,7 +5,7 @@
     android:id="@+id/list_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.ListFragment">
+    tools:context="dev.jaun.qr_code_scanner.Fragments.ListFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_fragment_recycler_view"

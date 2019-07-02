@@ -1,4 +1,4 @@
-package com.example.qr_code_scanner.database;
+package dev.jaun.qr_code_scanner.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

@@ -1,4 +1,4 @@
-package com.example.qr_code_scanner;
+package dev.jaun.qr_code_scanner;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.qr_code_scanner.Fragments.DetailFragment;
-import com.example.qr_code_scanner.database.QRCodeData;
-import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
+import dev.jaun.qr_code_scanner.Fragments.DetailFragment;
+
+import dev.jaun.qr_code_scanner.R;
+
+import dev.jaun.qr_code_scanner.database.QRCodeData;
+import dev.jaun.qr_code_scanner.database.datatypes.QRCodeModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

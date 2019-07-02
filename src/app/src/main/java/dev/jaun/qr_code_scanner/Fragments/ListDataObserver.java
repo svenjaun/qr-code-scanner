@@ -1,12 +1,12 @@
-package com.example.qr_code_scanner.Fragments;
+package dev.jaun.qr_code_scanner.Fragments;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.example.qr_code_scanner.QrCodeListAdapter;
-import com.example.qr_code_scanner.R;
+import dev.jaun.qr_code_scanner.QrCodeListAdapter;
+import dev.jaun.qr_code_scanner.R;
 
 public class ListDataObserver extends RecyclerView.AdapterDataObserver {
 

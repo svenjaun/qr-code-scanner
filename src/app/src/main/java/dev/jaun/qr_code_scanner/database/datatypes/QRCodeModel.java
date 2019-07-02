@@ -1,4 +1,4 @@
-package com.example.qr_code_scanner.database.datatypes;
+package dev.jaun.qr_code_scanner.database.datatypes;
 import android.graphics.Bitmap;
 
 import android.support.annotation.NonNull;

@@ -1,13 +1,13 @@
-package com.example.qr_code_scanner.Activities;
+package dev.jaun.qr_code_scanner.Activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.qr_code_scanner.Fragments.DetailFragment;
-import com.example.qr_code_scanner.Fragments.ListFragment;
-import com.example.qr_code_scanner.R;
+import dev.jaun.qr_code_scanner.Fragments.DetailFragment;
+import dev.jaun.qr_code_scanner.Fragments.ListFragment;
+import dev.jaun.qr_code_scanner.R;
 
 public class HistoryActivity extends AppCompatActivity {
 

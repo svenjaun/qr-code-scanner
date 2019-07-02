@@ -1,4 +1,4 @@
-package com.example.qr_code_scanner.Activities;
+package dev.jaun.qr_code_scanner.Activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -17,8 +17,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.qr_code_scanner.Fragments.EditFragment;
-import com.example.qr_code_scanner.R;
+import dev.jaun.qr_code_scanner.Fragments.EditFragment;
+import dev.jaun.qr_code_scanner.R;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;

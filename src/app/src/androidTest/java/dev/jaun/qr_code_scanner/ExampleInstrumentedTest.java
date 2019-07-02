@@ -1,4 +1,4 @@
-package com.example.qr_code_scanner;
+package dev.jaun.qr_code_scanner;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -6,7 +6,6 @@ import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 
 import static org.junit.Assert.*;
 
@@ -22,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.qr_code_scanner", appContext.getPackageName());
+        assertEquals("dev.jaun.qr_code_scanner", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package com.example.qr_code_scanner.Fragments;
+package dev.jaun.qr_code_scanner.Fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,11 +15,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.qr_code_scanner.Activities.MainActivity;
-import com.example.qr_code_scanner.Activities.HistoryActivity;
-import com.example.qr_code_scanner.R;
-import com.example.qr_code_scanner.database.QRCodeData;
-import com.example.qr_code_scanner.database.datatypes.QRCodeModel;
+import dev.jaun.qr_code_scanner.Activities.MainActivity;
+import dev.jaun.qr_code_scanner.Activities.HistoryActivity;
+import dev.jaun.qr_code_scanner.R;
+import dev.jaun.qr_code_scanner.database.QRCodeData;
+import dev.jaun.qr_code_scanner.database.datatypes.QRCodeModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

@@ -1,4 +1,4 @@
-package com.example.qr_code_scanner;
+package dev.jaun.qr_code_scanner;
 
 import org.junit.Test;
 
