@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +14,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -61,6 +64,34 @@ public class MainActivity extends AppCompatActivity {
         });
         toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle(R.string.app_name);
+        toolbar.inflateMenu(R.menu.menu_main);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                if(menuItem.getItemId()==R.id.action_settings)
+                {
+                    // TODO: Open settings
+                }
+                else if(menuItem.getItemId()== R.id.action_exit)
+                {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        finishAndRemoveTask();
+                    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        finishAffinity();
+                    } else {
+                        Toast.makeText(thisActivity.getBaseContext(), "Cannot close application, Android version to old",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    // do something
+                }
+
+                return false;
+            }
+        });
     }
 
     @Override
@@ -157,5 +188,12 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
         floatingActionButton.setVisibility(View.VISIBLE);
         floatingActionButton.setEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 }

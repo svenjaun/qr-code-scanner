@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">QR-Code-Scanner</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="simple_fragment_transition">list_edit_transition</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_exit">Exit</string>
 </resources>
