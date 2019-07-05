@@ -2,14 +2,13 @@ package dev.jaun.qr_code_scanner.Fragments;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +18,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
+import androidx.annotation.RequiresApi;
 import dev.jaun.qr_code_scanner.Activities.MainActivity;
 import dev.jaun.qr_code_scanner.R;
 import dev.jaun.qr_code_scanner.database.QRCodeData;
 import dev.jaun.qr_code_scanner.database.datatypes.QRCodeModel;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
 
 
 @SuppressLint("ValidFragment")

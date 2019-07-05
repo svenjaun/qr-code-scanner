@@ -1,10 +1,10 @@
 package dev.jaun.qr_code_scanner.Fragments;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import dev.jaun.qr_code_scanner.QrCodeListAdapter;
 import dev.jaun.qr_code_scanner.R;
 

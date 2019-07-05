@@ -5,12 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
-import dev.jaun.qr_code_scanner.database.datatypes.QRCodeModel;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import dev.jaun.qr_code_scanner.database.datatypes.QRCodeModel;
 
 public class QRCodeData {
     @NonNull

@@ -2,22 +2,25 @@ package dev.jaun.qr_code_scanner.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import dev.jaun.qr_code_scanner.QrCodeListAdapter;
 import dev.jaun.qr_code_scanner.R;
 import dev.jaun.qr_code_scanner.database.QRCodeData;
 import dev.jaun.qr_code_scanner.database.datatypes.QRCodeModel;
+
+//import androidx.core.app.Fragment;
+//import androidx.core.app.FragmentActivity;
 
 public class ListFragment extends Fragment {
 

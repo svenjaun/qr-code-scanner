@@ -2,9 +2,9 @@ package dev.jaun.qr_code_scanner.Activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import dev.jaun.qr_code_scanner.Fragments.DetailFragment;
 import dev.jaun.qr_code_scanner.Fragments.ListFragment;
 import dev.jaun.qr_code_scanner.R;
