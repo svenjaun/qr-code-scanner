@@ -1,4 +1,4 @@
-# QR-Code-Scanner
+# QR-Code-Scanner V2
 
 Dies ist eine QR-Code-Scanner App welche wird für den Mobile ÜK-335 entworfen haben.
 
